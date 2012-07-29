@@ -1,3 +1,4 @@
+*.swp
 Gemfile.lock
 pkg/
 vendor/cache/*.gem

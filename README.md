@@ -1,8 +1,8 @@
-# java_superclass
+# JAVA_SUPERCLASS JRuby Module
 
 * [Homepage](https://rubygems.org/gems/java_superclass)
 * [Documentation](http://rubydoc.info/gems/java_superclass/frames)
-* [Email](mailto:)
+* [Email](mailto:szymon@wrozyski.com)
 
 ## Description
 

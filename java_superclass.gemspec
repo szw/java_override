@@ -1,16 +1,18 @@
 # -*- encoding: utf-8 -*-
 
-require File.expand_path('../lib/java_superclass/version', __FILE__)
+require File.expand_path('../lib/java/superclass/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.name          = "java_superclass"
-  gem.version       = JavaSuperclass::VERSION
-  gem.summary       = %q{TODO: Summary}
-  gem.description   = %q{TODO: Description}
+  gem.version       = Java::Superclass::VERSION
+  gem.summary       = %q{Useful utilities supporting Java class inheritance in JRuby}
+  gem.description   = %q{Useful utilities supporting Java class inheritance in JRuby. Enable overriding plain Java methods with Ruby naming conventions.}
   gem.license       = "MIT"
   gem.authors       = ["Szymon Wrozynski"]
-  gem.email         = ""
+  gem.email         = "szymon@wrozynski.com"
   gem.homepage      = "https://rubygems.org/gems/java_superclass"
+
+  gem.platform      = 'java'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
