@@ -1,4 +1,4 @@
-# JAVA_SUPERCLASS JRuby Module
+# Java::Superclass JRuby Module
 
 * [Homepage](https://rubygems.org/gems/java_superclass)
 * [Documentation](http://rubydoc.info/gems/java_superclass/frames)
