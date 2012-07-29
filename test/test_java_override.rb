@@ -29,6 +29,20 @@ class TestJavaOverride < Test::Unit::TestCase
     assert_equal "MyPanel: #{@j_panel.minimum_size_set?}", @my_panel.isMinimumSizeSet
     assert_equal "MyPanel: #{@j_panel.isMinimumSizeSet}", @my_panel.minimum_size_set?
   end
+
+  should "not add aliases for private methods" do
+    assert MyPanel.private_instance_methods(true).include?(:print_all)
+    assert MyPanel.private_instance_methods(true).include?(:paint_children)
+    refute MyPanel.private_instance_methods(true).include?(:printAll)
+    refute MyPanel.private_instance_methods(true).include?(:paintChildren)
+    refute MyPanel.instance_methods(false).include?(:printAll)
+    refute MyPanel.instance_methods(false).include?(:paintChildren)
+  end
+
+  should "add method_added only to singleton class even if included" do
+    refute_respond_to @my_panel, :method_added
+    refute MyPanel.instance_methods.include?(:method_added)
+  end
 end
 
 class MyPanel < JPanel
@@ -49,5 +63,13 @@ class MyPanel < JPanel
 
   def minimum_size_set?
     "MyPanel: #{super}"
+  end
+
+  private
+
+  def print_all
+  end
+
+  def paint_children
   end
 end
