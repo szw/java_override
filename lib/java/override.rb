@@ -1,20 +1,20 @@
 # -*- encoding: utf-8 -*-
 #
-# Java::Superclass JRuby Module
+# Java::Override JRuby Module
 # Copyright (c) 2012 Szymon Wrozynski
 # Licensed under the MIT License conditions.
 #
 # Useful utilities supporting Java class inheritance in JRuby.
 # Enable overriding plain Java methods with Ruby naming conventions.
 
-require 'java/superclass/version'
+require 'java/override/version'
 
 module Java
-  module Superclass
+  module Override
 
     def method_added(m)
-      return if @_java_superclass_hook_recursion_call
-      @_java_superclass_hook_recursion_call = true
+      return if @_java_override_hook_recursion_call
+      @_java_override_hook_recursion_call = true
 
       new_m = m.to_s.split(/[^a-z0-9]/i).map { |w| w.capitalize }.join
 
@@ -37,7 +37,7 @@ module Java
         end
       end
     ensure
-      @_java_superclass_hook_recursion_call = false
+      @_java_override_hook_recursion_call = false
     end
 
     def self.included(klass)
