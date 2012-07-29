@@ -24,6 +24,7 @@ class TestJavaOverride < Test::Unit::TestCase
 
   should "override javabean accessors" do
     @my_panel.name = 'foo'
+
     assert_equal "MyPanel: foobar", @my_panel.name
     assert_equal "MyPanel: foobar", @my_panel.getName
     assert_equal "MyPanel: #{@j_panel.minimum_size_set?}", @my_panel.isMinimumSizeSet

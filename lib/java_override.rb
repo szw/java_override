@@ -12,8 +12,8 @@ require 'java_override/version'
 module JavaOverride
 
   def method_added(m)
-    return if @_java_override_internal__call
-    @_java_override_internal__call = true
+    return if @_java_override_internal_call
+    @_java_override_internal_call = true
 
     return if private_instance_methods(true).include?(m)
 
@@ -35,7 +35,7 @@ module JavaOverride
       end
     end
 
-    @_java_override_internal__call = false
+    @_java_override_internal_call = false
   end
 
   def self.included(klass)
