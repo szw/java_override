@@ -1,4 +1,4 @@
-# Java::Override JRuby Module
+# JavaOverride JRuby Module
 
 * [Homepage](https://rubygems.org/gems/java_superclass)
 * [Documentation](http://rubydoc.info/gems/java_superclass/frames)
@@ -12,7 +12,7 @@ TODO: Description
 
 ## Examples
 
-    require 'java/override'
+    require 'java_override'
 
 ## Requirements
 
