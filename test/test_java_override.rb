@@ -1,6 +1,6 @@
 require 'helper'
 require 'java'
-require 'java/override'
+require 'java_override'
 require 'shoulda'
 
 java_import javax::swing::JPanel
@@ -12,7 +12,7 @@ class TestJavaOverride < Test::Unit::TestCase
   end
 
   should "have version" do
-    version = Java::Override.const_get('VERSION')
+    version = JavaOverride.const_get('VERSION')
 
     assert !version.empty?, 'should have a VERSION constant'
   end
@@ -32,7 +32,7 @@ class TestJavaOverride < Test::Unit::TestCase
 end
 
 class MyPanel < JPanel
-  include Java::Override
+  include JavaOverride
 
   def fire_property_change(property_name, old_value, new_value)
     super(property_name, old_value, new_value)

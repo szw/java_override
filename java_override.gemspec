@@ -1,10 +1,10 @@
 # -*- encoding: utf-8 -*-
 
-require_relative 'lib/java/override/version'
+require_relative 'lib/java_override/version'
 
 Gem::Specification.new do |gem|
   gem.name                  = "java_override"
-  gem.version               = Java::Override::VERSION
+  gem.version               = JavaOverride::VERSION
   gem.summary               = %q{Support for Java class inheritance in JRuby}
   gem.description           = %q{Support for Java class inheritance in JRuby. Enable overriding plain Java methods with Ruby naming conventions.}
   gem.license               = "MIT"
