@@ -12,7 +12,7 @@ TODO: Description
 
 ## Examples
 
-    require 'java_superclass'
+    require 'java/superclass'
 
 ## Requirements
 
