@@ -40,9 +40,14 @@ class TestJavaOverride < Test::Unit::TestCase
     refute MyPanel.instance_methods(false).include?(:paintChildren)
   end
 
-  should "add method_added only to singleton class even if included" do
+  should "add method_added only to the singleton class even if included" do
     refute_respond_to @my_panel, :method_added
     refute MyPanel.instance_methods.include?(:method_added)
+  end
+
+  should "add method_added as a private singleton method" do
+    assert MyPanel.private_methods.include?(:method_added)
+    assert MyPanel.class.private_instance_methods(true).include?(:method_added)
   end
 end
 
