@@ -1,4 +1,6 @@
 *.swp
+.rvmrc
+.vimrc
 Gemfile.lock
 pkg/
 vendor/cache/*.gem
