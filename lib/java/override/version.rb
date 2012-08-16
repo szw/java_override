@@ -1,6 +1,6 @@
 module Java
   module Override
-    # JavaOverride version
-    VERSION = "0.1.1"
+    # Java::Override version
+    VERSION = "0.1.2"
   end
 end

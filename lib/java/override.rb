@@ -18,24 +18,21 @@ module Java
       return if @_java_override_internal_call
       @_java_override_internal_call = true
 
-      return if private_instance_methods(true).include?(m)
-
-      new_m = m.to_s.split(/[^a-z0-9]/i).map { |w| w.capitalize }.join
-
-      return if new_m.empty?
-
-      if m.to_s.end_with?('?') && superclass.instance_methods.include?("is#{new_m}".to_sym)
-        alias_method("is#{new_m}", m)
-      elsif m.to_s.end_with?('=') && superclass.instance_methods.include?("set#{new_m}".to_sym)
-        alias_method("set#{new_m}", m)
-      elsif superclass.instance_methods.include?("get#{new_m}".to_sym)
-        alias_method("get#{new_m}", m)
-      else
-        new_m = new_m[0, 1].downcase + new_m[1..-1]
-
-        if superclass.instance_methods.include?(new_m.to_sym)
-          alias_method(new_m, m)
+      unless private_instance_methods(true).include?(m)
+        if m.to_s.end_with?('?')
+          prefix = 'is'
+        elsif m.to_s.end_with?('=')
+          prefix = 'set'
+        else
+          prefix = 'get'
         end
+
+        base = m.to_s.gsub(/[^a-z0-9]/i, '')
+
+        find_java_m = ->(n) { superclass.instance_methods.find { |m| m.to_s.casecmp(n).zero? } }
+        java_m = find_java_m.call("#{prefix}#{base}") || find_java_m.call(base)
+
+        alias_method(java_m, m) if java_m
       end
 
       @_java_override_internal_call = false

@@ -49,6 +49,10 @@ class TestJavaOverride < Test::Unit::TestCase
     assert MyPanel.private_methods.include?(:method_added)
     assert MyPanel.class.private_instance_methods(true).include?(:method_added)
   end
+
+  should "handle names with abbreviations written in upper case" do
+    assert_equal "MyPanel: #{@j_panel.getUIClassID}", @my_panel.getUIClassID
+  end
 end
 
 class MyPanel < JPanel
@@ -68,6 +72,10 @@ class MyPanel < JPanel
   end
 
   def minimum_size_set?
+    "MyPanel: #{super}"
+  end
+
+  def ui_class_id
     "MyPanel: #{super}"
   end
 
