@@ -32,7 +32,7 @@ module Java
         find_java_m = ->(n) { superclass.instance_methods.find { |m| m.to_s.casecmp(n).zero? } }
         java_m = find_java_m.call("#{prefix}#{base}") || find_java_m.call(base)
 
-        alias_method(java_m, m) if java_m
+        alias_method(java_m, m) if java_m && java_m != m
       end
 
       @_java_override_internal_call = false

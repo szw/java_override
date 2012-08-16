@@ -53,9 +53,19 @@ class TestJavaOverride < Test::Unit::TestCase
   should "handle names with abbreviations written in upper case" do
     assert_equal "MyPanel: #{@j_panel.getUIClassID}", @my_panel.getUIClassID
   end
+
+  should "handle plain method names" do
+    assert_equal "MyPanel: #{SuperPanel.new.foo}", @my_panel.foo
+  end
 end
 
-class MyPanel < JPanel
+class SuperPanel < JPanel
+  def foo
+    "SuperPanel"
+  end
+end
+
+class MyPanel < SuperPanel
   include Java::Override
 
   def fire_property_change(property_name, old_value, new_value)
@@ -69,6 +79,10 @@ class MyPanel < JPanel
 
   def name
     "#{super}bar"
+  end
+
+  def foo
+    "MyPanel: #{super}"
   end
 
   def minimum_size_set?
