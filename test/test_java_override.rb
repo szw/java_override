@@ -2,15 +2,19 @@ require 'helper'
 require 'java'
 require 'java/override'
 require 'shoulda'
+require 'fileutils'
 
-java_import javax::swing::JPanel
-java_import javax::swing::table::TableCellRenderer
-java_import org::w3c::dom::DOMImplementationList
+`javac -d . test/java/TestInterface.java test/java/TestSuperclass.java`
+
+java_import "TestInterface"
+java_import "TestSuperclass"
+
+FileUtils.rm './*.class', force: true
 
 class TestJavaOverride < Test::Unit::TestCase
   def setup
-    @j_panel = JPanel.new
-    @my_panel = MyPanel.new
+    @superclass = TestSuperclass.new
+    @my_class = MyClass.new
   end
 
   should "have version" do
@@ -20,122 +24,111 @@ class TestJavaOverride < Test::Unit::TestCase
   end
 
   should "override simple methods" do
-    assert_equal "MyPanel", @my_panel.fire_property_change('a', 'b', 'c')
-    assert_equal "MyPanel", @my_panel.firePropertyChange('a', 'b', 'c')
+    assert_equal "MyClass: TestSuperclass#myLongMethodName", @my_class.my_long_method_name
+    assert_equal "MyClass: TestSuperclass#myLongMethodName", @my_class.myLongMethodName
   end
 
   should "override javabean accessors" do
-    @my_panel.name = 'foo'
+    @my_class.foo = 'FOO'
 
-    assert_equal "MyPanel: foobar", @my_panel.name
-    assert_equal "MyPanel: foobar", @my_panel.getName
-    assert_equal "MyPanel: #{@j_panel.minimum_size_set?}", @my_panel.isMinimumSizeSet
-    assert_equal "MyPanel: #{@j_panel.isMinimumSizeSet}", @my_panel.minimum_size_set?
+    assert_equal "MyClassGetter: MyClassSetter: FOO", @my_class.foo
+    assert_equal "MyClassGetter: MyClassSetter: FOO", @my_class.getFoo
+
+    assert TestSuperclass.new.foo_bar?
+    assert TestSuperclass.new.isFooBar
+
+    refute @my_class.foo_bar?
+    refute @my_class.isFooBar
   end
 
   should "not add aliases for private methods" do
-    assert MyPanel.private_instance_methods(true).include?(:print_all)
-    assert MyPanel.private_instance_methods(true).include?(:paint_children)
-    refute MyPanel.private_instance_methods(true).include?(:printAll)
-    refute MyPanel.private_instance_methods(true).include?(:paintChildren)
-    refute MyPanel.instance_methods(false).include?(:printAll)
-    refute MyPanel.instance_methods(false).include?(:paintChildren)
+    assert MyClass.private_instance_methods(true).include?(:my_private_method)
+    refute MyClass.private_instance_methods(true).include?(:myPrivateMethod)
+    refute MyClass.instance_methods(false).include?(:myPrivateMethod)
   end
 
   should "add method_added only to the singleton class even if included" do
-    refute_respond_to @my_panel, :method_added
-    refute MyPanel.instance_methods.include?(:method_added)
+    refute_respond_to @my_class, :method_added
+    refute MyClass.instance_methods.include?(:method_added)
   end
 
   should "add method_added as a private singleton method" do
-    assert MyPanel.private_methods.include?(:method_added)
-    assert MyPanel.class.private_instance_methods(true).include?(:method_added)
+    assert MyClass.private_methods.include?(:method_added)
+    assert MyClass.class.private_instance_methods(true).include?(:method_added)
   end
 
   should "handle names with abbreviations written in upper case" do
-    assert_equal "MyPanel: #{@j_panel.getUIClassID}", @my_panel.getUIClassID
+    assert_equal "MyClass: TestSuperclass#myLongMethodNameWithABBRV", @my_class.my_long_method_name_with_abbrv
+    assert_equal "MyClass: TestSuperclass#myLongMethodNameWithABBRV", @my_class.myLongMethodNameWithABBRV
   end
 
   should "handle plain method names" do
-    assert_equal "MyPanel: #{SuperPanel.new.foo}", @my_panel.foo
+    assert_equal "MyClass: TestSuperclass#method", @my_class.method
   end
 
   should "handle protected methods" do
-    assert_equal("MyPanel: #{SuperPanel.new.run_bar}", @my_panel.run_bar)
+    assert_equal "MyClass: TestSuperclass#protectedMethod", @my_class.test_protected_method
+    assert_equal "MyClass: TestSuperclass#protectedMethod", @my_class.testProtectedMethod
   end
 
   should "handle interface methods" do
     assert_equal(
-      "InterfaceSample",
-      InterfaceSample.new.getTableCellRendererComponent(nil, nil, nil, nil, nil, nil)
+      "MyInterface#methodMyInterface#my_long_method_name_with_abbrv",
+      @my_class.testInterface(MyInterfaceImpl.new)
     )
   end
 end
 
-class InterfaceSample
+
+class MyClass < TestSuperclass
   include Java::Override
-  include TableCellRenderer
 
-  def get_table_cell_renderer_component(table, value, is_selected, has_focus, row, column)
-    "InterfaceSample"
+  def method
+    "MyClass: #{super}"
   end
-end
 
-class SuperPanel < JPanel
+  def my_long_method_name
+    "MyClass: #{super}"
+  end
+
+  def my_long_method_name_with_abbrv
+    "MyClass: #{super}"
+  end
+
+  def foo_bar?
+    !super
+  end
+
   def foo
-    "SuperPanel"
+    "MyClassGetter: #{super}"
   end
 
-  def run_bar
-    bar
+  def foo=(foo)
+    super("MyClassSetter: #{foo}")
   end
 
   protected
 
-  def bar
-    "SuperBar"
-  end
-end
-
-class MyPanel < SuperPanel
-  include Java::Override
-
-  def fire_property_change(property_name, old_value, new_value)
-    super(property_name, old_value, new_value)
-    "MyPanel"
-  end
-
-  def name=(value)
-    super "MyPanel: #{value}"
-  end
-
-  def name
-    "#{super}bar"
-  end
-
-  def foo
-    "MyPanel: #{super}"
-  end
-
-  def minimum_size_set?
-    "MyPanel: #{super}"
-  end
-
-  def ui_class_id
-    "MyPanel: #{super}"
-  end
-
-  protected
-
-  def bar
-    "MyPanel: #{super}"
+  def protected_method
+    "MyClass: #{super}"
   end
 
   private
 
-  def print_all
+  def my_private_method
+
+  end
+end
+
+class MyInterfaceImpl
+  include Java::Override
+  include TestInterface
+
+  def method
+    "MyInterface#method"
   end
 
-  def paint_children
+  def my_long_method_name_with_abbrv
+    "MyInterface#my_long_method_name_with_abbrv"
   end
 end
