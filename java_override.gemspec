@@ -5,8 +5,8 @@ require_relative 'lib/java/override/version'
 Gem::Specification.new do |gem|
   gem.name                  = "java_override"
   gem.version               = Java::Override::VERSION
-  gem.summary               = %q{Support for Java class inheritance in JRuby}
-  gem.description           = %q{Support for Java class inheritance in JRuby. Enable overriding plain Java methods with Ruby naming conventions.}
+  gem.summary               = %q{Support for Java class and interface inheritance in JRuby}
+  gem.description           = %q{Support for Java class and interface inheritance in JRuby. Enable overriding native Java methods with JRuby ones follwing Ruby naming conventions.}
   gem.license               = "MIT"
   gem.authors               = ["Szymon Wrozynski"]
   gem.email                 = "szymon@wrozynski.com"
@@ -23,4 +23,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'bundler', '~> 1.0'
   gem.add_development_dependency 'rake', '~> 0.8'
   gem.add_development_dependency 'rubygems-tasks', '~> 0.2'
+  gem.add_development_dependency 'shoulda'
 end
