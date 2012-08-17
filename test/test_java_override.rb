@@ -4,6 +4,8 @@ require 'java/override'
 require 'shoulda'
 
 java_import javax::swing::JPanel
+java_import javax::swing::table::TableCellRenderer
+java_import org::w3c::dom::DOMImplementationList
 
 class TestJavaOverride < Test::Unit::TestCase
   def setup
@@ -57,11 +59,41 @@ class TestJavaOverride < Test::Unit::TestCase
   should "handle plain method names" do
     assert_equal "MyPanel: #{SuperPanel.new.foo}", @my_panel.foo
   end
+
+  should "handle protected methods" do
+    assert_equal("MyPanel: #{SuperPanel.new.run_bar}", @my_panel.run_bar)
+  end
+
+  should "handle interface methods" do
+    assert_equal(
+      "InterfaceSample",
+      InterfaceSample.new.getTableCellRendererComponent(nil, nil, nil, nil, nil, nil)
+    )
+  end
+end
+
+class InterfaceSample
+  include Java::Override
+  include TableCellRenderer
+
+  def get_table_cell_renderer_component(table, value, is_selected, has_focus, row, column)
+    "InterfaceSample"
+  end
 end
 
 class SuperPanel < JPanel
   def foo
     "SuperPanel"
+  end
+
+  def run_bar
+    bar
+  end
+
+  protected
+
+  def bar
+    "SuperBar"
   end
 end
 
@@ -90,6 +122,12 @@ class MyPanel < SuperPanel
   end
 
   def ui_class_id
+    "MyPanel: #{super}"
+  end
+
+  protected
+
+  def bar
     "MyPanel: #{super}"
   end
 
