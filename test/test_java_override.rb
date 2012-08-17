@@ -4,12 +4,13 @@ require 'java/override'
 require 'shoulda'
 require 'fileutils'
 
-`javac -d . test/java/TestInterface.java test/java/TestSuperclass.java`
+`javac -d . #{File.join('test', 'java', 'TestInterface.java')} #{File.join('test', 'java', 'TestSuperclass.java')}`
 
 java_import "TestInterface"
 java_import "TestSuperclass"
 
-FileUtils.rm './*.class', force: true
+FileUtils.rm 'TestInterface.class'
+FileUtils.rm 'TestSuperclass.class'
 
 class TestJavaOverride < Test::Unit::TestCase
   def setup
