@@ -2,7 +2,7 @@ Java::Override JRuby Module
 ===========================
 
 * [Homepage](https://rubygems.org/gems/java_override)
-* [Documentation](http://rubydoc.info/gems/java_override/frames)
+* [Documentation](https://github.com/szw/java_override/blob/master/README.md)
 
 Description
 -----------
