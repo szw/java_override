@@ -7,24 +7,28 @@ Java::Override JRuby Module
 Description
 -----------
 
-Java::Override is a JRuby module enabling overriding native Java methods with
-Ruby naming conventions. JRuby allows you to call Java methods (of Java classes/interfaces)
-with Ruby conventions. You can use so called *snake_case*, Java Beans accessors are
-*translated* to Ruby ones (e.g. <code>getFooBar</code> can be accessed via <code>foo\_bar</code>,
-<code>isFooBar</code> via <code>foo\_bar?</code>, or <code>setFooBar</code> via <code>foo\_bar=</code>).
-Those methods are added to Java classes as JRuby aliases. However, if you want to override
-a Java method you cannot override such alias because Java will not see it. Java will do polymorphic
-call of its own, native methods. Therefore you have to override native Java methods and it
-doesn't look pretty in JRuby code.
+Java::Override is a JRuby module that enables overriding native Java methods with
+Ruby naming conventions. JRuby allows you to call Java methods (members of native
+Java classes/interfaces) with Ruby naming style. Therefore you can use *snake_case* and
+Ruby-like accessors instead of JavaBean ones.
 
-The Java::Override module abolishes this inconvenience. Once included in the subclass it
-creates aliases to native java methods and supports inheritance and polymorphism that way.
+In JRuby JavaBean accessors are *translated* to their Ruby counterparts
+(e.g. <code>getFooBar</code> can be accessed via <code>foo\_bar</code>,
+<code>isFooBar</code> via <code>foo\_bar?</code>, or <code>setFooBar</code> via
+<code>foo\_bar=</code>). Those methods are added to Java classes as JRuby aliases.
+However, if we want to override a Java method we cannot define a Ruby-like method
+because JVM won't see it. JVM performs polymorphic calls on its own, native methods.
+And so we have to override native Java methods and it doesn't look much pretty
+in JRuby code.
+
+But the Java::Override module abolishes this inconvenience. Once included in the subclass
+it creates aliases to native Java methods and supports inheritance and polymorphism that way.
 Moreover, it adds proper aliases for Java interfaces included as modules.
 
 Examples
 --------
 
-Look at the following implementation of javax.swing.table.AbstractTableModel class.
+Here is a good looking simple implementation of <code>javax.swing.table.AbstractTableModel</code> class.
 
     require 'java/override'
 

@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.name                  = "java_override"
   gem.version               = Java::Override::VERSION
   gem.summary               = %q{Support for Java class and interface inheritance in JRuby}
-  gem.description           = %q{Support for Java class and interface inheritance in JRuby. Enable overriding native Java methods with JRuby ones follwing Ruby naming conventions.}
+  gem.description           = %q{Support for Java class and interface inheritance in JRuby. Enable overriding native Java methods with JRuby ones following Ruby naming conventions.}
   gem.license               = "MIT"
   gem.authors               = ["Szymon Wrozynski"]
   gem.email                 = "szymon@wrozynski.com"

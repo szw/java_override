@@ -12,9 +12,8 @@ java_import "TestSuperclass"
 FileUtils.rm 'TestInterface.class'
 FileUtils.rm 'TestSuperclass.class'
 
-class TestJavaOverride < Test::Unit::TestCase
+class JavaOverrideTest < Test::Unit::TestCase
   def setup
-    @superclass = TestSuperclass.new
     @my_class = MyClass.new
   end
 
@@ -35,8 +34,10 @@ class TestJavaOverride < Test::Unit::TestCase
     assert_equal "MyClassGetter: MyClassSetter: FOO", @my_class.foo
     assert_equal "MyClassGetter: MyClassSetter: FOO", @my_class.getFoo
 
-    assert TestSuperclass.new.foo_bar?
-    assert TestSuperclass.new.isFooBar
+    test_superclass = TestSuperclass.new
+
+    assert test_superclass.foo_bar?
+    assert test_superclass.isFooBar
 
     refute @my_class.foo_bar?
     refute @my_class.isFooBar
