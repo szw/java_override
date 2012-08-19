@@ -7,28 +7,28 @@ Java::Override JRuby Module
 Description
 -----------
 
-Java::Override is a JRuby module that enables overriding native Java methods with
-Ruby naming conventions. JRuby allows you to call Java methods (members of native
-Java classes/interfaces) with Ruby naming style. Therefore you can use *snake_case* and
+Java::Override is a JRuby module that enables overriding native Java methods with Ruby
+naming conventions. JRuby allows you to call Java methods (members of native Java
+classes/interfaces) with Ruby naming style. Therefore you can use *snake_case* and
 Ruby-like accessors instead of JavaBean ones.
 
-In JRuby JavaBean accessors are *translated* to their Ruby counterparts
-(e.g. <code>getFooBar</code> can be accessed via <code>foo\_bar</code>,
-<code>isFooBar</code> via <code>foo\_bar?</code>, or <code>setFooBar</code> via
-<code>foo\_bar=</code>). Those methods are added to Java classes as JRuby aliases.
-However, if we want to override a Java method we cannot define a Ruby-like method
-because JVM won't see it. JVM performs polymorphic calls on its own, native methods.
-And so we have to override native Java methods and it doesn't look much pretty
-in JRuby code.
+In JRuby JavaBean accessors are *translated* to their Ruby counterparts (e.g.
+<code>getFooBar</code> can be accessed via <code>foo\_bar</code>, <code>isFooBar</code>
+via <code>foo\_bar?</code>, or <code>setFooBar</code> via <code>foo\_bar=</code>). Those
+methods are added to Java classes as JRuby aliases.  However, if we want to override
+a Java method we cannot define a Ruby-like method because JVM won't see it. JVM performs
+polymorphic calls on its own, native methods.  And so we have to override native Java
+methods and it doesn't look much pretty in JRuby code.
 
 But the Java::Override module abolishes this inconvenience. Once included in the subclass
-it creates aliases to native Java methods and supports inheritance and polymorphism that way.
-Moreover, it adds proper aliases for Java interfaces included as modules.
+it creates aliases to native Java methods and supports inheritance and polymorphism that
+way.  Moreover, it adds proper aliases for Java interfaces included as modules.
 
 Examples
 --------
 
-Here is a good looking simple implementation of <code>javax.swing.table.AbstractTableModel</code> class.
+Here is a good looking simple implementation of
+<code>javax.swing.table.AbstractTableModel</code> class.
 
     require 'java/override'
 
@@ -79,8 +79,8 @@ Here is a good looking simple implementation of <code>javax.swing.table.Abstract
 Requirements
 ------------
 
-Java::Override requires JRuby in 1.9 mode and a decent JVM. It has been tested
-under JRuby 1.6.2 and Oracle Java 7 JDK.
+Java::Override requires JRuby in 1.9 mode and a decent JVM. It has been tested under
+JRuby&nbsp;1.6.2 and Oracle Java&nbsp;7 JDK.
 
 Install
 -------
