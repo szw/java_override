@@ -21,12 +21,11 @@ module Java
       @_java_override_internal_call = true
 
       unless private_instance_methods(true).include?(m)
-        super_methods = Set.new(superclass.instance_methods.map(&:to_s))
+        s_methods = Set.new(superclass.instance_methods.map(&:to_s))
 
         included_modules.each do |i|
-          if i.respond_to?(:java_class)
-            super_methods.merge(i.java_class.java_instance_methods.map(&:name).uniq)
-          end
+          s_methods.merge(i.java_class.java_instance_methods.map(&:name).uniq) \
+            if i.respond_to?(:java_class)
         end
 
         if m.to_s.end_with?('?')
@@ -39,10 +38,10 @@ module Java
 
         base = m.to_s.gsub(/[^a-z0-9]/i, '')
 
-        find_java_m = ->(n) { super_methods.find { |m| m.to_s.casecmp(n).zero? } }
-        java_m = find_java_m.call("#{prefix}#{base}") || find_java_m.call(base)
+        find_sm = ->(n) { s_methods.find { |sm| sm.to_s.casecmp(n).zero? } }
+        sm = find_sm.call("#{prefix}#{base}") || find_sm.call(base)
 
-        alias_method(java_m, m) if java_m && java_m != m.to_s
+        alias_method(sm, m) if sm && sm != m.to_s
       end
 
       remove_instance_variable(:@_java_override_internal_call)
