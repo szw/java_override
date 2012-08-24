@@ -4,7 +4,10 @@ require 'java/override'
 require 'shoulda'
 require 'fileutils'
 
-`javac -d . #{File.join('test', 'java', 'TestInterface.java')} #{File.join('test', 'java', 'TestSuperclass.java')}`
+java_iface = File.join('test', 'java', 'TestInterface.java')
+java_class = File.join('test', 'java', 'TestSuperclass.java')
+
+`javac -d . #{java_iface} #{java_class}`
 
 java_import "TestInterface"
 java_import "TestSuperclass"
@@ -24,8 +27,10 @@ class JavaOverrideTest < Test::Unit::TestCase
   end
 
   should "override simple methods" do
-    assert_equal "MyClass: TestSuperclass#myLongMethodName", @my_class.my_long_method_name
-    assert_equal "MyClass: TestSuperclass#myLongMethodName", @my_class.myLongMethodName
+    assert_equal("MyClass: TestSuperclass#myLongMethodName",
+                 @my_class.my_long_method_name)
+    assert_equal("MyClass: TestSuperclass#myLongMethodName",
+                 @my_class.myLongMethodName)
   end
 
   should "override javabean accessors" do
@@ -60,8 +65,10 @@ class JavaOverrideTest < Test::Unit::TestCase
   end
 
   should "handle names with abbreviations written in upper case" do
-    assert_equal "MyClass: TestSuperclass#myLongMethodNameWithABBRV", @my_class.my_long_method_name_with_abbrv
-    assert_equal "MyClass: TestSuperclass#myLongMethodNameWithABBRV", @my_class.myLongMethodNameWithABBRV
+    assert_equal("MyClass: TestSuperclass#myLongMethodNameWithABBRV",
+                 @my_class.my_long_method_name_with_abbrv)
+    assert_equal("MyClass: TestSuperclass#myLongMethodNameWithABBRV",
+                 @my_class.myLongMethodNameWithABBRV)
   end
 
   should "handle plain method names" do
@@ -69,8 +76,10 @@ class JavaOverrideTest < Test::Unit::TestCase
   end
 
   should "handle protected methods" do
-    assert_equal "MyClass: TestSuperclass#protectedMethod", @my_class.test_protected_method
-    assert_equal "MyClass: TestSuperclass#protectedMethod", @my_class.testProtectedMethod
+    assert_equal("MyClass: TestSuperclass#protectedMethod",
+                 @my_class.test_protected_method)
+    assert_equal("MyClass: TestSuperclass#protectedMethod",
+                 @my_class.testProtectedMethod)
   end
 
   should "handle interface methods" do
