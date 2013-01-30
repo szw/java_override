@@ -22,12 +22,12 @@ module Java
       @_java_override_internal_call = true
 
       unless private_instance_methods(true).include?(method)
-        if method.to_s.end_with?('?')
-          prefix = 'is'
+        prefix = if method.to_s.end_with?('?')
+          'is'
         elsif method.to_s.end_with?('=')
-          prefix = 'set'
+          'set'
         else
-          prefix = 'get'
+          'get'
         end
 
         basename = method.to_s.gsub(/[^a-z0-9]/i, '')
