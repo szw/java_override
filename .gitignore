@@ -1,7 +1,6 @@
 *.swp
 .rvmrc
 .vimrc
-Gemfile.lock
 pkg/
 vendor/cache/*.gem
 *.gem
@@ -23,3 +22,5 @@ tmp
 _yardoc
 doc/
 *.class
+tags
+Gemfile.lock.tags

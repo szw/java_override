@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-
 require_relative 'lib/java/override/version'
 
 Gem::Specification.new do |gem|

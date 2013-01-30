@@ -27,10 +27,8 @@ class JavaOverrideTest < Test::Unit::TestCase
   end
 
   should "override simple methods" do
-    assert_equal("MyClass: TestSuperclass#myLongMethodName",
-                 @my_class.my_long_method_name)
-    assert_equal("MyClass: TestSuperclass#myLongMethodName",
-                 @my_class.myLongMethodName)
+    assert_equal "MyClass: TestSuperclass#myLongMethodName", @my_class.my_long_method_name
+    assert_equal "MyClass: TestSuperclass#myLongMethodName", @my_class.myLongMethodName
   end
 
   should "override javabean accessors" do
@@ -65,10 +63,8 @@ class JavaOverrideTest < Test::Unit::TestCase
   end
 
   should "handle names with abbreviations written in upper case" do
-    assert_equal("MyClass: TestSuperclass#myLongMethodNameWithABBRV",
-                 @my_class.my_long_method_name_with_abbrv)
-    assert_equal("MyClass: TestSuperclass#myLongMethodNameWithABBRV",
-                 @my_class.myLongMethodNameWithABBRV)
+    assert_equal "MyClass: TestSuperclass#myLongMethodNameWithABBRV", @my_class.my_long_method_name_with_abbrv
+    assert_equal "MyClass: TestSuperclass#myLongMethodNameWithABBRV", @my_class.myLongMethodNameWithABBRV
   end
 
   should "handle plain method names" do
@@ -76,17 +72,12 @@ class JavaOverrideTest < Test::Unit::TestCase
   end
 
   should "handle protected methods" do
-    assert_equal("MyClass: TestSuperclass#protectedMethod",
-                 @my_class.test_protected_method)
-    assert_equal("MyClass: TestSuperclass#protectedMethod",
-                 @my_class.testProtectedMethod)
+    assert_equal "MyClass: TestSuperclass#protectedMethod", @my_class.test_protected_method
+    assert_equal "MyClass: TestSuperclass#protectedMethod", @my_class.testProtectedMethod
   end
 
   should "handle interface methods" do
-    assert_equal(
-      "MyInterface#methodMyInterface#my_long_method_name_with_abbrv",
-      @my_class.testInterface(MyInterfaceImpl.new)
-    )
+    assert_equal "MyInterface#methodMyInterface#my_long_method_name_with_abbrv", @my_class.testInterface(MyInterfaceImpl.new)
   end
 end
 
